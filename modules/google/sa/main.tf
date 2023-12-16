@@ -8,3 +8,12 @@ module "service_accounts" {
   description        = var.description
   project_roles      = try(var.project_roles, [])
 }
+
+
+resource "google_service_account_iam_binding" "workloadIdentityUser" {
+  for_each = var.workloadIdentityUser == true ? {} : []
+  service_account_id = module.service_accounts.service_account
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = var.members
+}
