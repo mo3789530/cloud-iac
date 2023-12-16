@@ -17,12 +17,10 @@ variable "router_name" {
 
 variable "log_config" {
   type = object({
-    enable = true
-    filter = "ERRORS_ONLY"
+    enable = bool
+    filter = string
   })
 }
-
-
 variable "source_subnetwork_ip_ranges_to_nat" {
   type    = string
   default = "ALL_SUBNETWORKS_ALL_IP_RANGES"

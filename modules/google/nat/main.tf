@@ -1,6 +1,3 @@
-
-
-
 resource "google_compute_router_nat" "this" {
   name                   = var.name
   router                 = var.router_name
