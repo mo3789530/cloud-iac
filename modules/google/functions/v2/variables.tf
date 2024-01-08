@@ -21,31 +21,6 @@ variable "function_name" {
   description = "Name of the Cloud Function"
 }
 
-variable "runtime" {
-  description = "Runtime for the Cloud Function (e.g., nodejs14)"
-}
-
-variable "source_bucket" {
-  description = "Google Cloud Storage bucket containing the Cloud Function code"
-}
-
-variable "source_object" {
-  description = "Object path in the source bucket containing the Cloud Function code"
-}
-
-variable "entry_point" {
-  description = "Name of the function (must be defined in the source code)"
-}
-
-variable "memory" {
-  description = "Amount of memory to allocate to the Cloud Function"
-  default     = 256
-}
-
-variable "timeout" {
-  description = "Timeout for the Cloud Function in seconds"
-  default     = 60
-}
 
 variable "allow_unauthenticated" {
   description = "Allow unauthenticated invocations of the function"
@@ -55,4 +30,52 @@ variable "allow_unauthenticated" {
 variable "security_level" {
   description = "Security level of function. Allowed values: SECURE_ALWAYS, SECURE_OPTIONAL"
   default     = "SECURE_ALWAYS"
+}
+
+
+
+variable "build_config" {
+  type = object({
+    runtime     = string
+    entry_point = string
+    source = object({
+      storage_source = object({
+        bucket = string
+        object = string
+      })
+    })
+  })
+  default = null
+}
+
+
+variable "service_config" {
+  type = object({
+    available_cpu      = number
+    available_memory   = number
+    timeout            = string
+    max_instance_count = number
+    min_instance_count = number
+    vpc_connector      = string
+    ingress_settings   = string
+    egress_settings    = string
+    service_account    = string
+  })
+  default = {
+    available_cpu      = 1
+    available_memory   = 256
+    timeout            = "60s"
+    max_instance_count = 0
+    min_instance_count = 0
+    vpc_connector      = null
+    ingress_settings   = "ALLOW_ALL"
+    egress_settings    = "ALL_TRAFFIC"
+    service_account    = null
+  }
+
+}
+variable "description" {
+  type        = string
+  default     = "Processes events."
+  description = "The description of the function."
 }
