@@ -14,6 +14,33 @@
  * limitations under the License.
  */
 
+variable "name" {
+  description = "Name of the service."
+  type        = string
+  default     = ""
+}
+
+variable "description" {
+  description = "Description of the service."
+  type        = string
+  default     = ""
+}
+
+variable "region" {
+  description = "Region of the service."
+  type        = string
+}
+
+variable "location" {
+  description = "Location of the service."
+  type        = string
+}
+
+variable "project" {
+  description = "Project of the service."
+  type        = string
+}
+
 variable "project_id" {
   description = "Project id of the project that holds the network."
   type        = string
